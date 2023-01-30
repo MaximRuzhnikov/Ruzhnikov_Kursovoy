@@ -1,0 +1,465 @@
+﻿<Window x:Class="DPOService.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:DPOService"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        Title="Учёт оборудования" Height="700" Width="1280" WindowStartupLocation ="CenterScreen"
+        WindowStyle="ThreeDBorderWindow" AllowsTransparency="False" Background="Transparent" Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="0 0 0 0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 35 0 0">
+                    <Border CornerRadius="0 25 25 0" Width="250" Height="150" Background="#e40414">
+                        <Image x:Name="Logo" Source="Resources/MTS_Logo_rus_w.png" RenderTransformOrigin="0,0" Margin="10,10,10,10"/>
+                    </Border>
+                </StackPanel>
+                <Separator Height="0.8" Margin="20 30" Background="#999999"/>
+                <RadioButton x:Name="OborudButton" Style="{StaticResource menuButton}" IsChecked="True" Click="OborudButton_Click" Checked="OborudButton_Checked">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Оборудование" Style="{StaticResource menuButtonText}" Margin="36 0 110 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="SpisanButton" Style="{StaticResource menuButton}" IsChecked="True" Click="SpisanButton_Click">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Списанное оборудование" Style="{StaticResource menuButtonText}" Margin="36 0 110 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="StatisticButton" Style="{StaticResource menuButton}" Click="StatisticButton_Click">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Статистика" Style="{StaticResource menuButtonText}" Margin="36 0 110 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="SpravkaButton" Style="{StaticResource menuButton}" Click="SpravkaButton_Click">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Справочный раздел" Style="{StaticResource menuButtonText}" Margin="36 0 110 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="ExitButton" Style="{StaticResource menuButton}" Checked="ExitButton_Checked">
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Выход" Style="{StaticResource menuButtonText}" Margin="36 0 110 0"/>
+                    </StackPanel>
+                </RadioButton>
+
+            </StackPanel>
+        </Border>
+        <Border x:Name="MainPage" Grid.Column="1" CornerRadius="0 0 0 0" MouseDown="Border_MouseDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 30 20"/>
+                <Grid Grid.Row="1" Margin="40,20,15,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
+                    </Grid.Effect>
+
+                </Grid>
+
+                <Grid Margin="10,10,20,135" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="175"/>
+                        <ColumnDefinition Width="175"/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Width="300" HorizontalAlignment="Left" Margin="36,-12,0,52">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="searchText" Margin="0,11,0,-35.8" Foreground="#FF69717D" IsHitTestVisible="False" Panel.ZIndex="1" Text="Поиск" FontSize="13" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="search" KeyDown="Search_KeyDown" Background="WhiteSmoke" Margin="0,35,0,-35.8" Grid.ColumnSpan="2"/>
+
+                    </Grid>
+
+                    <Button x:Name="perenosButton" Grid.Column="3" HorizontalAlignment="Center" Margin="-900,13,80,12" Width="115" Style="{StaticResource addButton}" Click="PerenosButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Отправить в<LineBreak></LineBreak>списанное</TextBlock>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="printButton" Grid.Column="3" HorizontalAlignment="Center" Margin="-900,13,-189,12" Width="110" Style="{StaticResource addButton}" Click="PrintButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Печать"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="addButton" Grid.Column="3" HorizontalAlignment="Center" Margin="22.6,13,-17,12" Width="110" Style="{StaticResource addButton}" Click="AddButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Добавить"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="editButton" Grid.Column="2" HorizontalAlignment="Center" Margin="47.8,13,83,12" Width="110" Style="{StaticResource addButton}" Click="EditButton_Click" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Изменить"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="delButton" Grid.Column="1" HorizontalAlignment="Center" Margin="73,13,8,12" Width="110" Style="{StaticResource addButton}" Click="delButton_Click" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Удалить"/>
+
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="15 0 15 15">
+                    <Border Margin="10,-210,0,0.2" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="15" MaxWidth="950" Height="555">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="15" Color="LightGray" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <StackPanel>
+
+                            <ListView x:Name="listofEqupment" Margin="10">
+                                <DataGrid x:Name="DGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserDeleteRows="True" Width="843">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="100"/>
+                                        <DataGridTextColumn Header="Модель" Binding="{Binding article_number}" Width="135"/>
+                                        <DataGridTextColumn Header="Наименование" Binding="{Binding name}" Width="178"/>
+                                        <DataGridTextColumn Header="Серийный номер" Binding="{Binding serial_number}" Width="180"/>
+                                        <DataGridTextColumn Header="Дата" Binding="{Binding date}" Width="140"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <uc:Cards x:Name="CountUsers" Grid.Column="0" Title="Кол-во оборудования:" Number="0" BackGround1="White" BackGround2 ="White" Margin="824,65,30,70" Grid.Row="1"/>
+            </Grid>
+        </Border>
+
+
+        <Border x:Name="MainnPage" Visibility="Hidden" Grid.Column="1" CornerRadius="0 0 0 0" MouseDown="Border_MouseDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 30 20"/>
+                <Grid Grid.Row="1" Margin="40,20,15,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
+                    </Grid.Effect>
+
+                </Grid>
+
+                <Grid Margin="10,10,20,135" Grid.RowSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="175"/>
+                        <ColumnDefinition Width="175"/>
+                        <ColumnDefinition Width="175"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Width="300" HorizontalAlignment="Left" Margin="36,-12,0,52">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="searchText1" Margin="0,11,0,-35.8" Foreground="#FF69717D" IsHitTestVisible="False" Panel.ZIndex="1" Text="Поиск" FontSize="13" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="search1" KeyDown="Search1_KeyDown" Background="WhiteSmoke" Margin="0,35,0,-35.8" Grid.ColumnSpan="2"/>
+
+                    </Grid>
+
+                    <Button x:Name="perenosButton1" Grid.Column="3" HorizontalAlignment="Center" Margin="-900,13,80,12" Width="115" Style="{StaticResource addButton}" Click="PerenosButton1_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Отправить в<LineBreak></LineBreak>основное</TextBlock>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="printButton1" Grid.Column="3" HorizontalAlignment="Center" Margin="-900,13,-189,12" Width="110" Style="{StaticResource addButton}" Click="PrintButton1_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Печать"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="addButton1" Grid.Column="3" HorizontalAlignment="Center" Margin="22.6,13,-17,12" Width="110" Style="{StaticResource addButton}" Click="AddButton1_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Добавить"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="editButton1" Grid.Column="2" HorizontalAlignment="Center" Margin="47.8,13,83,12" Width="110" Style="{StaticResource addButton}" Click="EditButton1_Click" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Изменить"/>
+
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="delButton1" Grid.Column="1" HorizontalAlignment="Center" Margin="73,13,8,12" Width="110" Style="{StaticResource addButton}" Click="DelButton1_Click" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Удалить"/>
+
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="15 0 15 15">
+                    <Border Margin="10,-210,0,0.2" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="15" MaxWidth="950" Height="555">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="15" Color="LightGray" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <StackPanel>
+
+                            <ListView x:Name="listofEqupment1" Margin="10">
+                                <DataGrid x:Name="DGrid1" AutoGenerateColumns="False" IsReadOnly="True" CanUserDeleteRows="True" Width="843">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="100"/>
+                                        <DataGridTextColumn Header="Модель" Binding="{Binding article_number}" Width="135"/>
+                                        <DataGridTextColumn Header="Наименование" Binding="{Binding name}" Width="178"/>
+                                        <DataGridTextColumn Header="Серийный номер" Binding="{Binding serial_number}" Width="180"/>
+                                        <DataGridTextColumn Header="Дата" Binding="{Binding date}" Width="140"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </ListView>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <uc:Cards x:Name="CountUsers1" Grid.Column="0" Title="Кол-во оборудования:" Number="0" BackGround1="White" BackGround2 ="White" Margin="824,65,30,70" Grid.Row="1"/>
+            </Grid>
+        </Border>
+
+
+        <Border x:Name="addPage" Visibility="Hidden" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown" MouseLeftButtonDown="AddPage_MouseLeftButtonDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+            <Grid Background="White">
+                <Border Margin="0" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="20" MaxWidth="500">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Введите данные" FontSize="30" FontWeight="Bold" Margin="0 0 0 20"/>
+
+                        <TextBox x:Name="addarticle_numberTextBox" materialDesign:HintAssist.Hint="Введите модель" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
+                        </TextBox>
+                        <TextBox x:Name="addnameTextBox" materialDesign:HintAssist.Hint="Введите наименование" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox x:Name="addserial_numberTextBox" materialDesign:HintAssist.Hint="Введите серийный номер" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <DatePicker x:Name="adddateTextBox" materialDesign:HintAssist.Hint="Введите дату поставки" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                        <Button x:Name="addButtonConf" Content="Добавить запись" Margin="1 30 250 0" Click="AddButtonConf_Click" Background="#ec747c"/>
+                        <Button x:Name="addButtonBack" Content="Назад" Margin="250 -31 0 30" Click="AddButtonBack_Click" Background="#ec747c"/>
+                        <Frame x:Name="_NavigationFrame" NavigationUIVisibility="Hidden" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border x:Name="addPage1" Visibility="Hidden" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown" MouseLeftButtonDown="AddPage_MouseLeftButtonDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+            <Grid Background="White">
+                <Border Margin="0" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="20" MaxWidth="500">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Введите данные" FontSize="30" FontWeight="Bold" Margin="0 0 0 20"/>
+
+                        <TextBox x:Name="addarticle_numberTextBox1" materialDesign:HintAssist.Hint="Введите модель" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
+                        </TextBox>
+                        <TextBox x:Name="addnameTextBox1" materialDesign:HintAssist.Hint="Введите наименование" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox x:Name="addserial_numberTextBox1" materialDesign:HintAssist.Hint="Введите серийный номер" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <DatePicker x:Name="adddateTextBox1" materialDesign:HintAssist.Hint="Введите дату поставки" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                        <Button x:Name="addButtonConf1" Content="Добавить запись" Margin="1 30 250 0" Click="AddButtonConf1_Click" Background="#ec747c"/>
+                        <Button x:Name="addButtonBack1" Content="Назад" Margin="250 -31 0 30" Click="AddButtonBack1_Click" Background="#ec747c"/>
+                        <Frame x:Name="_NavigationFrame2" NavigationUIVisibility="Hidden" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border x:Name="editPage" Visibility="Hidden" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown" MouseLeftButtonDown="AddPage_MouseLeftButtonDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+            <Grid Background="White">
+                <Border Margin="0" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="20" MaxWidth="500">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Изменение данных" FontSize="30" FontWeight="Bold" Margin="0 0 0 20"/>
+
+                        <TextBox x:Name="editarticle_numberTextBox" materialDesign:HintAssist.Hint="Введите модель" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
+                        </TextBox>
+                        <TextBox x:Name="editnameTextBox" materialDesign:HintAssist.Hint="Введите наименование" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox x:Name="editserial_numberTextBox" materialDesign:HintAssist.Hint="Введите серийный номер" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <DatePicker x:Name="editdateTextBox" materialDesign:HintAssist.Hint="Введите дату поставки" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                        <Button x:Name="editButtonConf" Content="Сохранить запись" Margin="1 30 250 0" Click="EditButtonConf_Click" Background="#ec747c"/>
+                        <Button x:Name="editButtonBack" Content="Назад" Margin="250 -31 0 30" Click="EditButtonBack_Click" Background="#ec747c"/>
+                        <Frame x:Name="_NavigationFrame1" NavigationUIVisibility="Hidden" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border x:Name="editPage1" Visibility="Hidden" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown" MouseLeftButtonDown="AddPage_MouseLeftButtonDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+
+            <Grid Background="White">
+                <Border Margin="0" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="20" MaxWidth="500">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="Изменение данных" FontSize="30" FontWeight="Bold" Margin="0 0 0 20"/>
+
+                        <TextBox x:Name="editarticle_numberTextBox1" materialDesign:HintAssist.Hint="Введите модель" Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+
+                        </TextBox>
+                        <TextBox x:Name="editnameTextBox1" materialDesign:HintAssist.Hint="Введите наименование" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox x:Name="editserial_numberTextBox1" materialDesign:HintAssist.Hint="Введите серийный номер" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <DatePicker x:Name="editdateTextBox1" materialDesign:HintAssist.Hint="Введите дату поставки" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                        <Button x:Name="editButtonConf1" Content="Сохранить запись" Margin="1 30 250 0" Click="EditButtonConf1_Click" Background="#ec747c"/>
+                        <Button x:Name="editButtonBack1" Content="Назад" Margin="250 -31 0 30" Click="EditButtonBack1_Click" Background="#ec747c"/>
+                        <Frame x:Name="_NavigationFrame3" NavigationUIVisibility="Hidden" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border x:Name="SpravkaPage" Visibility="Hidden" Grid.Column="1" CornerRadius="0 0 0 0" MouseDown="Border_MouseDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid Grid.Row="3" Margin="15 0 15 15">
+
+                <Border Margin="10,-8,0,0.2" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="15" MaxWidth="950" Height="610">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <DockPanel x:Name="MainDPanel">
+                        <TextBlock Text="Справка" FontSize="30" FontWeight="Bold" Margin="0 0 0 0"/>
+                        <TextBlock Text="Боковое меню" FontSize="20" Margin="-120 50 0 0" FontFamily="Segoe UI Emoji"/>
+                        <TextBlock FontSize="18" Margin="-135 80 -20 0" FontFamily="Segoe UI Emoji">-Выберете кнопку «Оборудование» из списка пунктов меню для просмотра информации об оборудовании,<LineBreak></LineBreak>представленной в виде таблицы.</TextBlock>
+                        <TextBlock Text="-Выберете кнопку  «Статистика» из списка пунктов меню для просмотра статистических данных по таблице." FontSize="18" Margin="-878,126,-20,-0.2" FontFamily="Segoe UI Emoji"></TextBlock>
+                        <TextBlock Text="Раздел Оборудование" FontSize="20" Margin="-878 153 -15 0" FontFamily="Segoe UI Emoji"/>
+                        <TextBlock FontSize="18" Margin="-878 180 -25 0" FontFamily="Segoe UI Emoji">-Для поиска информации по таблице, пользователь вводит нужный критерий в строку поиска,<LineBreak></LineBreak>расположенную над таблицей, и выполняет поиск нажатием на клавишу Enter.</TextBlock>
+                        <TextBlock FontSize="18" Margin="-878 225 -25 0" FontFamily="Segoe UI Emoji">-Для удаления данных из таблицы, пользователь выделяет нужную строку (или строки) и нажимает кнопку <LineBreak></LineBreak>«Удалить».</TextBlock>
+                        <TextBlock FontSize="18" Margin="-878 270 -25 0" FontFamily="Segoe UI Emoji">-Для добавления данных в таблицу, пользователь нажимает на кнопку «Добавить» и заполняет форму.  <LineBreak></LineBreak></TextBlock>
+                        <TextBlock FontSize="18" Margin="-878 292 -25 0" FontFamily="Segoe UI Emoji">-Для редактирования данных в таблице, пользователь нажимает кнопку «Изменить», предварительно <LineBreak></LineBreak>выбрав нужную строку в таблице нажатаем на неё левой кнопкой мыши.</TextBlock>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border x:Name="StatisticPage" Visibility="Hidden" Grid.Column="1" CornerRadius="0 0 0 0" MouseDown="Border_MouseDown">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                    <GradientStop Color="#f2f2f2" Offset="0"/>
+                    <GradientStop Color="#e5e5e5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid Grid.Row="3" Margin="15 0 15 15">
+
+                <Border Margin="10,-8,0,0.2" Background="White" VerticalAlignment="Center" Padding="35" CornerRadius="15" MaxWidth="950" Height="610">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="15" Color="LightGray" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <WindowsFormsHost>
+                           
+                        </WindowsFormsHost>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+
+    </Grid>
+</Window>
