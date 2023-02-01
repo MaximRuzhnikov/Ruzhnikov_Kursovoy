@@ -433,6 +433,7 @@
                         <TextBlock FontSize="18" Margin="-878 270 -25 0" FontFamily="Segoe UI Emoji">-Для добавления данных в таблицу, пользователь нажимает на кнопку «Добавить» и заполняет форму.  <LineBreak></LineBreak></TextBlock>
                         <TextBlock FontSize="18" Margin="-878 292 -25 0" FontFamily="Segoe UI Emoji">-Для редактирования данных в таблице, пользователь нажимает кнопку «Изменить», предварительно <LineBreak></LineBreak>выбрав нужную строку в таблице нажатаем на неё левой кнопкой мыши.</TextBlock>
                         <TextBlock FontSize="18" Margin="-878 340 -25 0" FontFamily="Segoe UI Emoji">-Для вывода на печать данных из таблицы, пользователь выбирает интересующие данные и нажимает на <LineBreak></LineBreak>кнопку "Печать".</TextBlock>
+                        <TextBlock FontSize="18" Margin="-878 385 -25 0" FontFamily="Segoe UI Emoji">-Для переноса строки из таблицы "Оборудование" в таблицу "Списанное оборудование", пользователь <LineBreak></LineBreak>выбирает нужную строку, нажатием на неё и нажимает на кнопку "Отправить в списанное".</TextBlock>
                     </DockPanel>
                 </Border>
             </Grid>
